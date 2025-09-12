@@ -1,4 +1,5 @@
 package ru.job4j.urlshortcut.dto.authentication.request;
+
 import javax.validation.constraints.NotBlank;
 
 import lombok.*;
@@ -7,7 +8,10 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterRequestDto {
-    @NotBlank(message = "You website domain name is expected for signup")
-    private String siteDomainName;
+public class AuthRequestDto {
+    @NotBlank
+    private String login;
+
+    @NotBlank
+    private String password;
 }

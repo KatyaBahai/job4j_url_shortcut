@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Link {
+public class Url {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
