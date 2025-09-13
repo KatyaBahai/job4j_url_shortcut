@@ -6,22 +6,20 @@ import org.springframework.stereotype.Service;
 import ru.job4j.urlshortcut.dto.authentication.request.RegisterRequestDto;
 import ru.job4j.urlshortcut.dto.authentication.response.RegisterResponseDto;
 import ru.job4j.urlshortcut.model.Site;
-import ru.job4j.urlshortcut.repository.site.SiteRepository;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
 @AllArgsConstructor
 @NoArgsConstructor
 public class SiteAuthServiceImpl implements SiteAuthService {
-    private SiteRepository siteRepository;
+    private SiteService siteService;
 
     @Override
     public RegisterResponseDto register(RegisterRequestDto registerRequestDto) {
         String siteDomainName = registerRequestDto.getSiteDomainName();
-        if (Boolean.TRUE.equals(siteRepository.existsByDomainName(siteDomainName))) {
-            Site site = siteRepository.findByDomainName(siteDomainName).get();
+        if (Boolean.TRUE.equals(siteService.existsByDomainName(siteDomainName))) {
+            Site site = siteService.findByDomainName(siteDomainName).get();
             return RegisterResponseDto.builder()
                     .login(site.getLogin())
                     .password("***")
@@ -37,7 +35,7 @@ public class SiteAuthServiceImpl implements SiteAuthService {
                 .password(password)
                 .build();
 
-        siteRepository.save(site);
+        siteService.save(site);
 
         return RegisterResponseDto.builder()
                 .login(login)

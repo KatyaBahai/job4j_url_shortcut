@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UrlRequestDto {
+public class UrlConvertRequestDto {
     @NotBlank
     private String urlToTransform;
 
