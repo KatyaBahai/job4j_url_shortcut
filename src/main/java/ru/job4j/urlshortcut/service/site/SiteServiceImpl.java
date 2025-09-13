@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.job4j.urlshortcut.model.Site;
 import ru.job4j.urlshortcut.repository.site.SiteRepository;
 
+import javax.transaction.Transactional;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Optional;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class SiteServiceImpl implements SiteService {
     private SiteRepository siteRepository;
 
+    @Transactional
     @Override
     public Site save(Site site) {
         try {

@@ -32,13 +32,15 @@ public class AuthController {
     private JwtUtils jwtUtils;
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterResponseDto> registerSite(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
+    public ResponseEntity<RegisterResponseDto> registerSite(
+            @Valid @RequestBody RegisterRequestDto registerRequestDto) {
         RegisterResponseDto registerDTO = siteAuthService.register(registerRequestDto);
         return ResponseEntity.ok(registerDTO);
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<AuthResponseDto> authenticateUser(@Valid @RequestBody AuthRequestDto authRequestDto) {
+    public ResponseEntity<AuthResponseDto> authenticateUser(
+            @Valid @RequestBody AuthRequestDto authRequestDto) {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(authRequestDto.getLogin(), authRequestDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);

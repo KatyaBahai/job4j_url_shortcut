@@ -7,6 +7,7 @@ import ru.job4j.urlshortcut.dto.authentication.request.RegisterRequestDto;
 import ru.job4j.urlshortcut.dto.authentication.response.RegisterResponseDto;
 import ru.job4j.urlshortcut.model.Site;
 
+import javax.transaction.Transactional;
 import java.util.UUID;
 
 @Service
@@ -15,6 +16,7 @@ import java.util.UUID;
 public class SiteAuthServiceImpl implements SiteAuthService {
     private SiteService siteService;
 
+    @Transactional
     @Override
     public RegisterResponseDto register(RegisterRequestDto registerRequestDto) {
         String siteDomainName = registerRequestDto.getSiteDomainName();

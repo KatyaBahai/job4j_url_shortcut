@@ -11,6 +11,7 @@ import ru.job4j.urlshortcut.model.Url;
 import ru.job4j.urlshortcut.repository.url.UrlRepository;
 import ru.job4j.urlshortcut.service.site.SiteService;
 
+import org.springframework.transaction.annotation.Transactional;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -25,6 +26,7 @@ public class UrlServiceImpl implements UrlService {
     private UrlRepository urlRepository;
     private SiteService siteService;
 
+    @Transactional
     @Override
     public UrlConvertResponseDto shortenUrl(UrlConvertRequestDto urlConvertRequestDto, String siteDomainName) {
         Site site = siteService.findByDomainName(siteDomainName)
@@ -45,21 +47,25 @@ public class UrlServiceImpl implements UrlService {
         return new UrlConvertResponseDto(shortCode);
     }
 
+    @Transactional
     @Override
     public String expandUrl(String shortCode) {
         if (!urlRepository.existsByCode(shortCode)) {
             throw new IllegalArgumentException("There's no url for this short code");
         }
-        Url fullUrl = urlRepository.findByCode(shortCode);
-        return fullUrl.getUrl();
+        Url originalUrl = urlRepository.findByCode(shortCode);
+        urlRepository.incrementRedirectCount(shortCode);
+        return originalUrl.getUrl();
     }
 
+    @Transactional
     @Override
     public void deleteUrl(String shortCode, String siteDomainName) {
         verifySiteAuthentication(siteDomainName);
         urlRepository.deleteByCode(shortCode);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<UrlConvertResponseDto> getAllUrls(String siteDomainName) {
         verifySiteAuthentication(siteDomainName);
