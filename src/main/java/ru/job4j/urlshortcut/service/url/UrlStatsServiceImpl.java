@@ -13,16 +13,15 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-@NoArgsConstructor
 public class UrlStatsServiceImpl implements UrlStatsService {
     private SiteService siteService;
     private UrlRepository urlRepository;
 
     @Transactional(readOnly = true)
     @Override
-    public List<StatsResponseDto> getAllUrlsStats(String siteDomainName) {
-        verifySiteAuthentication(siteDomainName);
-        List<Url> urls = urlRepository.findAllBySiteDomainName(siteDomainName);
+    public List<StatsResponseDto> getAllUrlsStats(String login) {
+        verifySiteAuthentication(login);
+        List<Url> urls = urlRepository.findAllBySiteLogin(login);
 
         return urls.stream()
                 .map(url -> new StatsResponseDto(url.getUrl(), url.getRedirectCount()))
@@ -31,8 +30,8 @@ public class UrlStatsServiceImpl implements UrlStatsService {
 
     @Transactional(readOnly = true)
     @Override
-    public StatsResponseDto getOneUrlStats(String siteDomainName, String code) {
-        verifySiteAuthentication(siteDomainName);
+    public StatsResponseDto getOneUrlStats(String login, String code) {
+        verifySiteAuthentication(login);
         if (!urlRepository.existsByCode(code)) {
             throw new IllegalArgumentException("There's no url existing for the given short code");
         }
@@ -40,8 +39,8 @@ public class UrlStatsServiceImpl implements UrlStatsService {
         return new StatsResponseDto(url.getUrl(), url.getRedirectCount());
     }
 
-    private void verifySiteAuthentication(String siteDomainName) {
-        siteService.findByDomainName(siteDomainName)
+    private void verifySiteAuthentication(String login) {
+        siteService.findByLogin(login)
                 .orElseThrow(() -> new IllegalArgumentException("Site not authorized"));
     }
 }

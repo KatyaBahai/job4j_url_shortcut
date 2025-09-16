@@ -1,6 +1,8 @@
 package ru.job4j.urlshortcut.model;
 
 import javax.persistence.*;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 @Entity
@@ -13,6 +15,7 @@ import lombok.*;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Site {
 
+    @Schema(description = "Model Information about a site that gets registered in the program as a user")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include

@@ -61,7 +61,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.antMatchers("/urlshortcut/auth/**").permitAll()
                                 .antMatchers("/urlshortcut/test/**").permitAll()
-                                .antMatchers("/swagger-ui/**").permitAll()
+                                .antMatchers("/swagger-ui/**",
+                                        "/v3/api-docs/**",
+                                        "/swagger-resources/**",
+                                        "/webjars/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())

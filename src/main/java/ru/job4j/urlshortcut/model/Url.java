@@ -1,9 +1,11 @@
 package ru.job4j.urlshortcut.model;
 import javax.persistence.*;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 @Entity
-@Table(name = "links")
+@Table(name = "called_urls")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -12,6 +14,7 @@ import lombok.*;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Url {
 
+    @Schema(description = "Model Information about urls sent and converted to short urls")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include

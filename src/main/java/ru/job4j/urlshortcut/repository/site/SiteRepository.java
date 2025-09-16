@@ -9,5 +9,7 @@ public interface SiteRepository extends JpaRepository<Site, Long> {
 
     Optional<Site> findByDomainName(String siteDomainName);
 
+    Optional<Site> findByLogin(String login);
+
     Boolean existsByDomainName(String siteDomainName);
 }

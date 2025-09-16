@@ -37,6 +37,11 @@ public class SiteServiceImpl implements SiteService {
     }
 
     @Override
+    public Optional<Site> findByLogin(String login) {
+        return siteRepository.findByLogin(login);
+    }
+
+    @Override
     public Optional<Site> findByDomainName(String siteDomainName) {
         return siteRepository.findByDomainName(siteDomainName);
     }

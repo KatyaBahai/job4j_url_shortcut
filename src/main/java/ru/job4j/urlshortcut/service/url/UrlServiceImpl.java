@@ -20,7 +20,6 @@ import java.util.UUID;
 @Slf4j
 @Service
 @AllArgsConstructor
-@NoArgsConstructor
 public class UrlServiceImpl implements UrlService {
     private final static int SHORT_CODE_LENGTH = 8;
     private UrlRepository urlRepository;
@@ -28,9 +27,9 @@ public class UrlServiceImpl implements UrlService {
 
     @Transactional
     @Override
-    public UrlConvertResponseDto shortenUrl(UrlConvertRequestDto urlConvertRequestDto, String siteDomainName) {
-        Site site = siteService.findByDomainName(siteDomainName)
-                .orElseThrow(() -> new IllegalArgumentException("Authenticated site not found in DB: " + siteDomainName));
+    public UrlConvertResponseDto shortenUrl(UrlConvertRequestDto urlConvertRequestDto, String login) {
+        Site site = siteService.findByLogin(login)
+                .orElseThrow(() -> new IllegalArgumentException("Authenticated site not found in DB: " + login));
 
         String originalLink = urlConvertRequestDto.getUrlToTransform();
         if (urlRepository.existsByUrl(originalLink)) {
@@ -42,6 +41,7 @@ public class UrlServiceImpl implements UrlService {
                 .code(shortCode)
                 .site(site)
                 .url(originalLink)
+                .redirectCount(0L)
                 .build();
         urlRepository.save(url);
         return new UrlConvertResponseDto(shortCode);
@@ -67,9 +67,9 @@ public class UrlServiceImpl implements UrlService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<UrlConvertResponseDto> getAllUrls(String siteDomainName) {
-        verifySiteAuthentication(siteDomainName);
-        List<Url> urls = urlRepository.findAllBySiteDomainName(siteDomainName);
+    public List<UrlConvertResponseDto> getAllUrls(String login) {
+        verifySiteAuthentication(login);
+        List<Url> urls = urlRepository.findAllBySiteLogin(login);
 
         return urls.stream()
                 .map(url -> new UrlConvertResponseDto(url.getUrl()))
@@ -96,8 +96,8 @@ public class UrlServiceImpl implements UrlService {
         return siteDomainName;
     }
 
-    private void verifySiteAuthentication(String siteDomainName) {
-        siteService.findByDomainName(siteDomainName)
+    private void verifySiteAuthentication(String login) {
+        siteService.findByLogin(login)
                 .orElseThrow(() -> new IllegalArgumentException("Site not found"));
     }
 }

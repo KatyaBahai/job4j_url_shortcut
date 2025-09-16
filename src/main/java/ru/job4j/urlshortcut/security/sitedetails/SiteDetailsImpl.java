@@ -61,7 +61,7 @@ public class SiteDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return domainName;
+        return login;
     }
 
     @Override

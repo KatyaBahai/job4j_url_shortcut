@@ -5,13 +5,6 @@
         xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-    <include file="scripts/001_ddl_create_table_users.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/002_ddl_create_table_posts.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/003_ddl_create_table_files.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/004_ddl_create_table_messages.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/005_ddl_create_table_friend_requests.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/006_ddl_create_table_subscriptions.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/008_ddl_create_table_roles.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/009_dml_insert_roles.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/010_ddl_create_table_users_roles.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/001_ddl_create_table_sites.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/002_ddl_create_table_urls.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

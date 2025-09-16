@@ -16,9 +16,9 @@ public class SiteDetailsServiceImpl  implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String siteDomainName) throws UsernameNotFoundException {
-        Site site = siteRepository.findByDomainName(siteDomainName)
-                .orElseThrow(() -> new UsernameNotFoundException("Site Not Found with site Domain Name: " + siteDomainName));
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        Site site = siteRepository.findByLogin(login)
+                .orElseThrow(() -> new UsernameNotFoundException("Site Not Found with site Domain Name: " + login));
         return SiteDetailsImpl.build(site);
     }
 }

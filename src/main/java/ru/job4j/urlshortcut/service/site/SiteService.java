@@ -10,5 +10,7 @@ public interface SiteService {
 
     Boolean existsByDomainName(String siteDomainName);
 
+    Optional<Site> findByLogin(String login);
+
     Optional<Site> findByDomainName(String siteDomainName);
 }

@@ -23,6 +23,8 @@ public interface UrlRepository extends JpaRepository<Url, Long> {
     List<Url> findAllBySiteDomainName(String siteDomainName);
 
     @Modifying
-    @Query("UPDATE Url u SET u.redirect_count = u.redirect_count + 1 WHERE u.code = :code")
+    @Query("UPDATE Url u SET u.redirectCount = u.redirectCount + 1 WHERE u.code = :code")
     void incrementRedirectCount(@Param("code") String code);
+
+    List<Url> findAllBySiteLogin(String login);
 }
