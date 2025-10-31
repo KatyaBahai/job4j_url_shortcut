@@ -47,15 +47,17 @@ public class UrlServiceImpl implements UrlService {
         return new UrlConvertResponseDto(shortCode);
     }
 
-    @Transactional
     @Override
     public String expandUrl(String shortCode) {
-        if (!urlRepository.existsByCode(shortCode)) {
-            throw new IllegalArgumentException("There's no url for this short code");
-        }
-        Url originalUrl = urlRepository.findByCode(shortCode);
-        urlRepository.incrementRedirectCount(shortCode);
+        Url originalUrl = urlRepository.findByCode(shortCode)
+                .orElseThrow(() -> new IllegalArgumentException("There's no url for this short code"));
+        incrementRedirectCount(shortCode);
         return originalUrl.getUrl();
+    }
+
+    @Transactional
+    public void incrementRedirectCount(String shortCode) {
+        urlRepository.incrementRedirectCount(shortCode);
     }
 
     @Transactional

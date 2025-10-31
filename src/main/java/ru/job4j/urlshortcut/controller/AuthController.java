@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.job4j.urlshortcut.controller.api.AuthControllerApi;
 import ru.job4j.urlshortcut.dto.authentication.request.AuthRequestDto;
 import ru.job4j.urlshortcut.dto.authentication.request.RegisterRequestDto;
 import ru.job4j.urlshortcut.dto.authentication.response.AuthResponseDto;
@@ -25,12 +26,11 @@ import ru.job4j.urlshortcut.service.site.SiteAuthService;
 
 import javax.validation.Valid;
 
-@Tag(name = "AuthController", description = "AuthController management APIs")
 @Validated
 @AllArgsConstructor
 @RestController
 @RequestMapping("/urlshortcut/auth")
-public class AuthController {
+public class AuthController implements AuthControllerApi {
     @Autowired
     private SiteAuthService siteAuthService;
     @Autowired

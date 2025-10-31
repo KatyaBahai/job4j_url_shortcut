@@ -1,7 +1,6 @@
 package ru.job4j.urlshortcut.service.url;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.job4j.urlshortcut.dto.statistics.StatsResponseDto;
@@ -32,10 +31,8 @@ public class UrlStatsServiceImpl implements UrlStatsService {
     @Override
     public StatsResponseDto getOneUrlStats(String login, String code) {
         verifySiteAuthentication(login);
-        if (!urlRepository.existsByCode(code)) {
-            throw new IllegalArgumentException("There's no url existing for the given short code");
-        }
-        Url url = urlRepository.findByCode(code);
+        Url url = urlRepository.findByCode(code)
+                .orElseThrow(() -> new IllegalArgumentException("There's no url existing for given short code"));
         return new StatsResponseDto(url.getUrl(), url.getRedirectCount());
     }
 

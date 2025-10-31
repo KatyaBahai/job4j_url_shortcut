@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import ru.job4j.urlshortcut.model.Url;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UrlRepository extends JpaRepository<Url, Long> {
 
@@ -14,7 +15,7 @@ public interface UrlRepository extends JpaRepository<Url, Long> {
 
     Boolean existsByUrl(String url);
 
-    Url findByCode(String code);
+    Optional<Url> findByCode(String code);
 
     int deleteByCode(String code);
 
